@@ -1,0 +1,408 @@
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('ORDERDETAILS') and o.name = 'FK_ORDERDET_ORDERS_OD_ORDERS')
+alter table ORDERDETAILS
+   drop constraint FK_ORDERDET_ORDERS_OD_ORDERS
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('ORDERDETAILS') and o.name = 'FK_ORDERDET_PRODUCTS__PRODUCTS')
+alter table ORDERDETAILS
+   drop constraint FK_ORDERDET_PRODUCTS__PRODUCTS
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('ORDERS') and o.name = 'FK_ORDERS_CUSTOMERS_CUSTOMER')
+alter table ORDERS
+   drop constraint FK_ORDERS_CUSTOMERS_CUSTOMER
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('ORDERS') and o.name = 'FK_ORDERS_EMPLOYEES_EMPLOYEE')
+alter table ORDERS
+   drop constraint FK_ORDERS_EMPLOYEES_EMPLOYEE
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('ORDERS') and o.name = 'FK_ORDERS_SHIPPING__SHIPPING')
+alter table ORDERS
+   drop constraint FK_ORDERS_SHIPPING__SHIPPING
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('PAYMENT') and o.name = 'FK_PAYMENT_ORDERS_PA_ORDERS')
+alter table PAYMENT
+   drop constraint FK_PAYMENT_ORDERS_PA_ORDERS
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('PAYMENT') and o.name = 'FK_PAYMENT_PAYMENTM__PAYMENTM')
+alter table PAYMENT
+   drop constraint FK_PAYMENT_PAYMENTM__PAYMENTM
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('PRODUCTS') and o.name = 'FK_PRODUCTS_BRANDS_PR_BRANDS')
+alter table PRODUCTS
+   drop constraint FK_PRODUCTS_BRANDS_PR_BRANDS
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('BRANDS')
+            and   type = 'U')
+   drop table BRANDS
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('CUSTOMERS')
+            and   type = 'U')
+   drop table CUSTOMERS
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('EMPLOYEES')
+            and   type = 'U')
+   drop table EMPLOYEES
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('ORDERDETAILS')
+            and   name  = 'PRODUCTS_OD_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index ORDERDETAILS.PRODUCTS_OD_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('ORDERDETAILS')
+            and   name  = 'ORDERS_OD_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index ORDERDETAILS.ORDERS_OD_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('ORDERDETAILS')
+            and   type = 'U')
+   drop table ORDERDETAILS
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('ORDERS')
+            and   name  = 'CUSTOMERS_ORDERS_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index ORDERS.CUSTOMERS_ORDERS_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('ORDERS')
+            and   name  = 'SHIPPING_ORDERS_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index ORDERS.SHIPPING_ORDERS_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('ORDERS')
+            and   name  = 'EMPLOYEES_ORDERS_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index ORDERS.EMPLOYEES_ORDERS_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('ORDERS')
+            and   type = 'U')
+   drop table ORDERS
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('PAYMENT')
+            and   name  = 'PAYMENTM_PAYMENT_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index PAYMENT.PAYMENTM_PAYMENT_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('PAYMENT')
+            and   name  = 'ORDERS_PAYMENT_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index PAYMENT.ORDERS_PAYMENT_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('PAYMENT')
+            and   type = 'U')
+   drop table PAYMENT
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('PAYMENTMETHOD')
+            and   type = 'U')
+   drop table PAYMENTMETHOD
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('PRODUCTS')
+            and   name  = 'BRANDS_PRODUCTS_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index PRODUCTS.BRANDS_PRODUCTS_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('PRODUCTS')
+            and   type = 'U')
+   drop table PRODUCTS
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('SHIPPINGMETHODS')
+            and   type = 'U')
+   drop table SHIPPINGMETHODS
+go
+
+/*==============================================================*/
+/* Table: BRANDS                                                */
+/*==============================================================*/
+create table BRANDS (
+   BRANDID              int                  not null,
+   BRANDDESCRIPTION     varchar(50)          null,
+   constraint PK_BRANDS primary key nonclustered (BRANDID)
+)
+go
+
+/*==============================================================*/
+/* Table: CUSTOMERS                                             */
+/*==============================================================*/
+create table CUSTOMERS (
+   CUSTOMERID           int                  not null,
+   COMPANYNAME          varchar(50)          null,
+   CONTACTNAME          varchar(50)          null,
+   CITY_                varchar(50)          null,
+   STATE                varchar(50)          null,
+   POSTALCODE           int                  null,
+   PHONENUMBER          int                  null,
+   constraint PK_CUSTOMERS primary key nonclustered (CUSTOMERID)
+)
+go
+
+/*==============================================================*/
+/* Table: EMPLOYEES                                             */
+/*==============================================================*/
+create table EMPLOYEES (
+   EMPLOYEEID           int                  not null,
+   FIRSTNAME            varchar(50)          null,
+   LASTNAME             varchar(50)          null,
+   TITLE                varchar(50)          null,
+   WORKPHONE            int                  null,
+   constraint PK_EMPLOYEES primary key nonclustered (EMPLOYEEID)
+)
+go
+
+/*==============================================================*/
+/* Table: ORDERDETAILS                                          */
+/*==============================================================*/
+create table ORDERDETAILS (
+   ORDERDETAILID        int                  not null,
+   ORDERID              int                  null,
+   PRODUCTID            int                  null,
+   QUANTITYOD           varchar(50)          null,
+   UNITPRICEOD          varchar(50)          null,
+   DISCOUNTOD           int                  null,
+   constraint PK_ORDERDETAILS primary key nonclustered (ORDERDETAILID)
+)
+go
+
+/*==============================================================*/
+/* Index: ORDERS_OD_FK                                          */
+/*==============================================================*/
+create index ORDERS_OD_FK on ORDERDETAILS (
+ORDERID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: PRODUCTS_OD_FK                                        */
+/*==============================================================*/
+create index PRODUCTS_OD_FK on ORDERDETAILS (
+PRODUCTID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: ORDERS                                                */
+/*==============================================================*/
+create table ORDERS (
+   ORDERID              int                  not null,
+   EMPLOYEEID           int                  null,
+   SHIPPINGMETHODID     int                  null,
+   CUSTOMERID           int                  null,
+   ORDERDATE            datetime             null,
+   QUANTITY             int                  null,
+   UNITPRICE            varchar(50)          null,
+   DISCOUNT             int                  null,
+   constraint PK_ORDERS primary key nonclustered (ORDERID)
+)
+go
+
+/*==============================================================*/
+/* Index: EMPLOYEES_ORDERS_FK                                   */
+/*==============================================================*/
+create index EMPLOYEES_ORDERS_FK on ORDERS (
+EMPLOYEEID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: SHIPPING_ORDERS_FK                                    */
+/*==============================================================*/
+create index SHIPPING_ORDERS_FK on ORDERS (
+SHIPPINGMETHODID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: CUSTOMERS_ORDERS_FK                                   */
+/*==============================================================*/
+create index CUSTOMERS_ORDERS_FK on ORDERS (
+CUSTOMERID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: PAYMENT                                               */
+/*==============================================================*/
+create table PAYMENT (
+   PAYMENTID            int                  not null,
+   ORDERID              int                  null,
+   PAYMENTMETHODID      int                  null,
+   PAYMENTDATE          datetime             null,
+   CREDITCARDNUMBER     int                  null,
+   CREDITCARDEXPDATE    datetime             null,
+   CARDHOLDERSNAME      varchar(50)          null,
+   constraint PK_PAYMENT primary key nonclustered (PAYMENTID)
+)
+go
+
+/*==============================================================*/
+/* Index: ORDERS_PAYMENT_FK                                     */
+/*==============================================================*/
+create index ORDERS_PAYMENT_FK on PAYMENT (
+ORDERID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: PAYMENTM_PAYMENT_FK                                   */
+/*==============================================================*/
+create index PAYMENTM_PAYMENT_FK on PAYMENT (
+PAYMENTMETHODID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: PAYMENTMETHOD                                         */
+/*==============================================================*/
+create table PAYMENTMETHOD (
+   PAYMENTMETHODID      int                  not null,
+   PAYMENTMETHOD        varchar(50)          null,
+   constraint PK_PAYMENTMETHOD primary key nonclustered (PAYMENTMETHODID)
+)
+go
+
+/*==============================================================*/
+/* Table: PRODUCTS                                              */
+/*==============================================================*/
+create table PRODUCTS (
+   PRODUCTID            int                  not null,
+   BRANDID              int                  null,
+   PRODUCTNAME          varchar(50)          null,
+   constraint PK_PRODUCTS primary key nonclustered (PRODUCTID)
+)
+go
+
+/*==============================================================*/
+/* Index: BRANDS_PRODUCTS_FK                                    */
+/*==============================================================*/
+create index BRANDS_PRODUCTS_FK on PRODUCTS (
+BRANDID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: SHIPPINGMETHODS                                       */
+/*==============================================================*/
+create table SHIPPINGMETHODS (
+   SHIPPINGMETHODID     int                  not null,
+   SHIPPINGMETHOD       varchar(50)          null,
+   constraint PK_SHIPPINGMETHODS primary key nonclustered (SHIPPINGMETHODID)
+)
+go
+
+alter table ORDERDETAILS
+   add constraint FK_ORDERDET_ORDERS_OD_ORDERS foreign key (ORDERID)
+      references ORDERS (ORDERID)
+go
+
+alter table ORDERDETAILS
+   add constraint FK_ORDERDET_PRODUCTS__PRODUCTS foreign key (PRODUCTID)
+      references PRODUCTS (PRODUCTID)
+go
+
+alter table ORDERS
+   add constraint FK_ORDERS_CUSTOMERS_CUSTOMER foreign key (CUSTOMERID)
+      references CUSTOMERS (CUSTOMERID)
+go
+
+alter table ORDERS
+   add constraint FK_ORDERS_EMPLOYEES_EMPLOYEE foreign key (EMPLOYEEID)
+      references EMPLOYEES (EMPLOYEEID)
+go
+
+alter table ORDERS
+   add constraint FK_ORDERS_SHIPPING__SHIPPING foreign key (SHIPPINGMETHODID)
+      references SHIPPINGMETHODS (SHIPPINGMETHODID)
+go
+
+alter table PAYMENT
+   add constraint FK_PAYMENT_ORDERS_PA_ORDERS foreign key (ORDERID)
+      references ORDERS (ORDERID)
+go
+
+alter table PAYMENT
+   add constraint FK_PAYMENT_PAYMENTM__PAYMENTM foreign key (PAYMENTMETHODID)
+      references PAYMENTMETHOD (PAYMENTMETHODID)
+go
+
+alter table PRODUCTS
+   add constraint FK_PRODUCTS_BRANDS_PR_BRANDS foreign key (BRANDID)
+      references BRANDS (BRANDID)
+go

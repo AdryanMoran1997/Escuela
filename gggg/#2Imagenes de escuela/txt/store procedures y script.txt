@@ -1,0 +1,68 @@
+Store procedure para consulta
+
+
+CREATE PROCEDURE [dbo].[spFruteriaConsulta]
+@Idproducto varchar(50)
+
+	
+AS
+BEGIN
+	
+	SELECT * FROM Producto WHERE	 Idproducto=@Idproducto
+END
+
+
+
+Store procedure Delete
+
+REATE PROCEDURE [dbo].[spFruteriaDelete]
+@Idproducto varchar(50)
+
+	
+AS
+BEGIN
+	
+	DELETE FROM Producto WHERE Idproducto=@Idproducto
+END
+
+
+Store procedure insert
+
+CREATE PROCEDURE [dbo].[spFruteriaInsert]
+@Idproducto varchar(50),
+@Nombre varchar(50),
+@Cantidad varchar(50),
+@Precio varchar(50),
+@FechaUltimaCompra varchar(50)
+	
+AS
+BEGIN
+	INSERT INTO Producto values(@Idproducto,@Nombre, @Cantidad,@Precio,@FechaUltimaCompra)
+	
+END
+
+Store procedure Update
+REATE PROCEDURE [dbo].[spFruteriaUpdate]
+@Idproducto varchar(50),
+@Nombre varchar(50),
+@Cantidad varchar(50),
+@Precio varchar(50),
+@FechaUltimaCompra varchar(50)
+	
+AS
+BEGIN
+	
+	UPDATE Producto SET Nombre= @Nombre, Cantidad = @Cantidad, Precio=@Precio, FechaUltimaCompra=@FechaUltimaCompra
+	WHERE Idproducto=@Idproducto
+END
+
+Script para la base de Datos
+
+CREATE DATABASE [Fruteria]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'Fruteria', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL13.MSQLSERVER2016\MSSQL\DATA\Fruteria.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'Fruteria_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL13.MSQLSERVER2016\MSSQL\DATA\Fruteria_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+GO
+
