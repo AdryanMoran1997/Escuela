@@ -1,0 +1,11 @@
+﻿SHIPPINGMETHODID,SHIPPINGMETHOD
+1,dhl
+2,ups
+3,fedex
+4,avion
+5,taxi
+6,uber
+7,didi
+8,metro
+9,moto
+10,bicicleta

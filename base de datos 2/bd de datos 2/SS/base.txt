@@ -1,0 +1,35 @@
+create type direccion_t  as object (
+calle varchar (50),
+ciudad varchar (50),
+estado varchar (50),
+codigo_postal int
+);
+create type nt_dire_t as table of direccion_t;
+create type alumno_t as object(
+nombre varchar(20),
+apellido_p varchar(20),
+apellido_m varchar(20),
+telefono number (20),
+fecha date,
+direccion nt_dire_t
+);
+create type nt_al_t as table of alumno_t;
+
+create table alumnos_e(
+año date,
+alumno nt_al_t
+)
+nested table alumno store as alumno_Tab
+(NESTED table direccion store as direccion_Tab );
+insert into alumnos_e values (TO_DATE('1/06/2018'),nt_al_t(alumno_t('saul','Cavazos','nelson',8443583110,TO_DATE('12/02/2000'),nt_dire_t(direccion_t('alfonso','saltillo','coahuila',25020)))));
+insert into alumnos_e values (TO_DATE('1/06/2018'),nt_al_t(alumno_t('juan','sanche','moreno',8443583111,TO_DATE('13/02/2000'),nt_dire_t(direccion_t('perez','saltillo','coahuila',25020)))));
+insert into alumnos_e values (TO_DATE('1/06/2019'),nt_al_t(alumno_t('isis','Guerrero','nelson',8446682750,TO_DATE('24/03/2011'),nt_dire_t(direccion_t('alfonso','saltillo','coahuila',25020)))));
+
+ CREATE or replace TYPE BODY alumno_t IS    
+      MEMBER FUNCTION edad  RETURN number IS  
+         BEGIN  
+             RETURN (Sysdate, fecha )/ 12; 
+         END;  
+      END;
+
+select a.año engreso, t.nombre nombre, t.apellido_p apellidop , t.apellido_m apellidom, d.calle calle, t.telefono telfono ,t.fecha edad from alumnos_e a, table(a.alumno) t, table(t.direccion) d;
